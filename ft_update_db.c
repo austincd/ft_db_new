@@ -25,3 +25,30 @@ int ft_update_status(int fd, t_dbinfo *dbmeta)
 	}
 	return (-1);
 }
+
+int ft_update_fields(int fd, t_dbinfo *dbmeta)
+{
+	long long	to_read;
+	int			llsize;
+	int			status;
+	void		*temp;
+
+	to_read = 0;
+	llsize = sizeof(long long);
+	if (dbmeta)
+	{
+		to_read = sizeof(t_finfo) * dbmeta->field_cap;
+		if (!dbmeta->fields)
+			dbmeta->fields = (t_finfo*)ft_memalloc(to_read);
+		lseek(fd, llsize * 3, SEEK_SET);
+		temp = dbmeta->fields;
+		while (to_read)
+		{
+			status = read(fd, temp, 512);
+			temp += status;
+			to_read -= status;
+		}
+		return (1);
+	}
+	return (-1);
+}

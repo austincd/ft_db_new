@@ -1,25 +1,29 @@
 #include "ft_db.h"
 
-int ft_create_field(int fd, char *name, short id)
+int ft_create_field(t_dbinfo *dbmeta, int fd, long long field_id, long long record_id)
 {
-	void	*new;
-	if (name && fd && id)
+	t_field	*new;
+
+	new = NULL;
+	if (dbmeta && fd)
 	{
-		if (id == 1)
-			new = (t_field_d*)ft_memalloc(sizeof(t_field_d));
-		else if (id == 2)
-			new = (t_field_ud*)ft_memalloc(sizeof(t_field_ud));
-		else if (id == 3)
-			new = (t_field_c*)ft_memalloc(sizeof(t_field_c));
-		else if (id == 4)
-			new = (t_field_s16*)ft_memalloc(sizeof(t_field_s16));
-		else if (id == 5)
-			new = (t_field_s256*)ft_memalloc(sizeof(t_field_s256));
-		else if (new)
+		if (dbmeta->fields)
+		{
+			if ((dbmeta->fields[field_id].type_id))
 			{
-			new->id = id;
-			return (1);
+				new = (t_field*)ft_memalloc(sizeof(t_field));
+				if (new)
+				{
+					new->id = dbmeta->fields[field_id].type_id;
+					new->field = field_id;
+					new->record = record_id;
+					ft_bzero(new->data_str, 256);
+					lseek(fd, 0, SEEK_END);
+					if (write(fd, new, sizeof(t_field)) == sizeof(t_field))
+						return (1);
+				}
 			}
+		}
 	}
 	return (-1);
 }
