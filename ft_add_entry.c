@@ -1,27 +1,29 @@
 #include "ft_db.h"
 
-long long ft_add_entry(t_dbinfo *dbmeta, int fd)
+int ft_add_entry(t_dbinfo *dbmeta, int fd, long long field_id, long long record_id)
 {
-	long long	num_fields;
-	long long	num_records;
-	long long	counter;
-	int			status;
+	t_entry	*new;
 
-	status = 1;
+	new = NULL;
 	if (dbmeta && fd)
 	{
-		counter = 0;
-		ft_update_status(fd, dbmeta);
-		num_fields = dbmeta->num_fields;
-		num_records = dbmeta->num_entries;
-		while (counter < num_fields && status == 1)
+		if (dbmeta->fields)
 		{
-			status = ft_create_field(dbmeta, fd, counter, num_records);
-			++counter;
+			if ((dbmeta->fields[field_id]->type_id))
+			{
+				new = (t_entry*)ft_memalloc(sizeof(t_entry));
+				if (new)
+				{
+					new->id = dbmeta->fields[field_id]->type_id;
+					new->field = field_id;
+					new->record = record_id;
+					ft_bzero(new->data, 256);
+					lseek(fd, 0, SEEK_END);
+					if (write(fd, new, sizeof(t_entry)) == sizeof(t_entry))
+						return (1);
+				}
+			}
 		}
-		++dbmeta->num_entries;
-		ft_write_dbmeta(dbmeta, fd);
-		return (1);
 	}
 	return (-1);
 }

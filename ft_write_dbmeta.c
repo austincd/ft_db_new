@@ -16,7 +16,7 @@ int	ft_write_dbmeta(t_dbinfo *dbmeta, int fd)
 	total += write(fd, &num_fields, llsize);
 	printf("fd is: %d\n", fd);
 	printf("total is %d\n", total);
-	total += write(fd, &dbmeta->num_entries, llsize);
+	total += write(fd, &dbmeta->num_records, llsize);
 	total += write(fd, &dbmeta->field_cap, llsize);
 	if (total == llsize * 3)
 		return (1);

@@ -2,28 +2,20 @@
 
 int ft_write_fields(t_dbinfo *dbmeta, int fd)
 {
-	long long	to_write;
+	long long	counter;
 	int			llsize;
-	int			status;
-	void		*temp;
 
-	to_write = 0;
+	counter = 0;
 	llsize = sizeof(long long);
 	if (dbmeta)
 	{
 		if (dbmeta->fields)
 		{
-			to_write = sizeof(t_finfo) * dbmeta->field_cap;
 			lseek(fd, llsize * 3, SEEK_SET);
-			temp = dbmeta->fields;
-			while (to_write)
+			while (counter < dbmeta->field_cap)
 			{
-				if (to_write > 512)
-					status = write(fd, temp, 512);
-				else
-					status = write(fd, temp, to_write);
-				temp += status;
-				to_write -= status;
+				write(fd, dbmeta->fields[counter], sizeof(t_field));
+				++counter;
 			}
 			return (1);
 		}
