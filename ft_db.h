@@ -3,6 +3,7 @@
 # include "libft/libft.h"
 # include <stdio.h>
 
+
 typedef struct		s_field{
 	long long		field;
 	char			field_name[32];
@@ -14,7 +15,7 @@ typedef struct		s_field{
 typedef struct		s_record{
 	long long		record;
 	long long		*entries;
-	struct s_record	*next;
+	struct s_record	**next;
 }					t_record;
 
 typedef struct	s_entry{
@@ -38,8 +39,14 @@ typedef struct	s_dbinfo{
 	long long			offset;
 	t_field				**fields;
 	t_record			**records;
-
 }				t_dbinfo;
+
+typedef struct	s_table{
+	int					num_fields;
+	int					num_records;
+	t_field				**fields;
+	t_record			**records;
+}				t_table
 
 int						ft_create_db(char *filename, long long field_cap);
 int						ft_update_status(int fd, t_dbinfo *dbmeta);

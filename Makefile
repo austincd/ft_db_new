@@ -12,9 +12,9 @@ $(NAME):
 		gcc -o $(NAME) $(OBJECTS) -L libft/ -l:libft.a
 
 clean:
-		rm $(OBJECTS)
+		rm -f $(OBJECTS)
 
 fclean: clean
-		rm ./ft_db
+		rm -f ./ft_db
 
 re: fclean all

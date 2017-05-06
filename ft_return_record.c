@@ -13,7 +13,7 @@ t_record	*ft_return_record(t_dbinfo *dbmeta, long long record)
 		if (new)
 		{
 			new->entries = (long long*)ft_memalloc(sizeof(long long) \
-			* dbmeta->num_records);
+			* dbmeta->num_fields);
 			while (counter < dbmeta->num_fields)
 			{
 				ft_longlongcat(new->entries, \

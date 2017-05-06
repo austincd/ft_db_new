@@ -1,0 +1,15 @@
+#include "ft_db.h"
+
+long long	ft_delete_record(t_dbinfo *dbmeta, int fd, long long record_id)
+{
+	long long	counter;
+
+	counter = 0;
+	if (dbmeta)
+	{
+		dbmeta->records[record]->dbmeta
+	}
+}
+
+long long	ft_delete_field(t_dbinfo *dbmeta, int fd, long long record_id)
+{}

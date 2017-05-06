@@ -1,0 +1,4 @@
+#include "ft_db.h"
+
+long long	ft_delete_record();
+long long	ft_delete_field

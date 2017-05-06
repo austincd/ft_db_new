@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 		}
 		if (ft_strequ(argv[1], "-c") && argc == 4)
 		{
-			close(ft_create_db(argv[2], ft_atoi(argv[3])));
+			close(fd);
 			ft_print_status(ft_open_db(argv[2], &fd));
 		}
 		if (ft_strequ(argv[1], "-o") && argc == 3)
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 		}
 		if (ft_strequ(argv[1], "-print") && argc == 5)
 		{
-			close(ft_create_db(argv[2], ft_atoi(argv[3])));
+			close(fd);
 			dbmeta = ft_open_db(argv[2], &fd);
 			printf("field %lld \n", field);
 			entry = ft_find_entry(dbmeta, fd, field, record);

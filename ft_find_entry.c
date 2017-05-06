@@ -5,6 +5,10 @@ t_entry	*ft_find_entry(t_dbinfo *dbmeta, int fd, long long record, long long fie
 	t_entry		*entry_ptr;
 	long long	index;
 
+	ft_refresh(dbmeta, fd);
+	ft_update_status(fd, dbmeta);
+	ft_update_fields(fd, dbmeta);
+	printf("%lld %lld\n", record, field);
 	if (fd >= 0 && dbmeta)
 	{
 		if (field >=0 && field <= dbmeta->num_fields \
@@ -16,7 +20,7 @@ t_entry	*ft_find_entry(t_dbinfo *dbmeta, int fd, long long record, long long fie
 			if (entry_ptr)
 			{
 			printf("hey\n");
-				lseek(fd, dbmeta->offset + sizeof(t_entry) * index, SEEK_SET);
+				lseek(fd, dbmeta->offset + (sizeof(t_entry) * index), SEEK_SET);
 				read(fd, entry_ptr, sizeof(t_entry));
 				entry_ptr->index = index;
 				return (entry_ptr);
